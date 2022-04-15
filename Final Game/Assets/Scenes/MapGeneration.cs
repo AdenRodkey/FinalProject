@@ -5,11 +5,14 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter))]
 public class MapGeneration : MonoBehaviour
 {
-    
+    //Vector3 for the vertices.
     Vector3[] vertices;
+    //Array to hold triangles.
     int[] triangles;
+    //A mesh for the actual map generation for the vertices and triangles later on.
     Mesh mesh;
 
+    //X and Z variables to limit the size of the mesh.
     public int xSize = 100;
     public int zSize = 100;
 
@@ -25,7 +28,9 @@ public class MapGeneration : MonoBehaviour
 
  
 
-   
+   //Function to actually create the mesh shape.
+   //Uses vertices to connect into a triangle shape, and then duplicates it to make polys or squares.
+   //It then loops through the x and z axes to change the y value with Perlin Noise to add a differential terrain (think hills and dips)
     void CreateShape()
     {
         vertices = new Vector3[(xSize + 1) * (zSize + 1)];
@@ -47,6 +52,8 @@ public class MapGeneration : MonoBehaviour
         int verts = 0;
         int tris = 0;
 
+        //Main Loop that loops through both the x and z size variables to connect the triangles together into polys on the x axis.
+        //Then goes out to the z axis to fill in an entire square grid (for this purpose its a square)
         for (int z = 0; z < zSize; z++)
         {
             for (int x = 0; x < xSize; x++)
@@ -66,6 +73,9 @@ public class MapGeneration : MonoBehaviour
         }
         
     }
+    //Updates the mesh and sets the mesh's vertices created earlier to the triangles and vertices below.
+    //Then recalculates normals. 
+    //
     void MeshUpdater()
     {
         mesh.Clear();
