@@ -22,6 +22,7 @@ public class MapGeneration : MonoBehaviour
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
+        GetComponent<MeshCollider>().sharedMesh = mesh;
         CreateShape();
         MeshUpdater();
     }
