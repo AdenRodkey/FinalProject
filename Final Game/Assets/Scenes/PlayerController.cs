@@ -4,14 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
-    public int hp;
-    public int stamina;
+    public Slider hp;
+    public Slider stamina;
     public float movespeed;
+    public bool IsSprinting;
+    public bool IsNotSprinting;
     // Start is called before the first frame update
     void Start()
     {
-        hp = 100;
-        stamina = 100;
+        hp.value = 100;
+        stamina.value = 100;
     }
 
     // Update is called once per frame
@@ -19,8 +21,13 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            stamina--;
+            if (stamina.value >= 0)
+                stamina.value--;
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+
         }
     }
-
+  
 }

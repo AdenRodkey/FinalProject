@@ -11,10 +11,10 @@ public class MapGeneration : MonoBehaviour
     int[] triangles;
     //A mesh for the actual map generation for the vertices and triangles later on.
     Mesh mesh;
-
+    
     //X and Z variables to limit the size of the mesh.
-    public int xSize = 100;
-    public int zSize = 100;
+    public int xSize;
+    public int zSize;
 
 
     // Start is called before the first frame update
