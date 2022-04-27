@@ -15,6 +15,7 @@ public class MapGeneration : MonoBehaviour
     //X and Z variables to limit the size of the mesh.
     public int xSize;
     public int zSize;
+    
 
 
     // Start is called before the first frame update
@@ -23,8 +24,13 @@ public class MapGeneration : MonoBehaviour
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
         GetComponent<MeshCollider>().sharedMesh = mesh;
+        GetComponent<MeshCollider>().convex = false;
         CreateShape();
         MeshUpdater();
+    }
+    void FixedUpdate()
+    {
+        GetComponent<MeshCollider>().convex = true;
     }
 
  
