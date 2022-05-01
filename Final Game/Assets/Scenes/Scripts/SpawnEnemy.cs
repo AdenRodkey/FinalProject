@@ -13,6 +13,8 @@ public class SpawnEnemy : MonoBehaviour
     private float spawnY;
     private GameObject player;
 
+    public int enemyspawned;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,10 +55,11 @@ public class SpawnEnemy : MonoBehaviour
 
             GameObject newenemy = Instantiate(enemy, spawnPosition, Quaternion.identity);
 
-
+            enemyspawned++;
+            Debug.Log(enemyspawned);
 
 
         }
-
+        
     }
 }

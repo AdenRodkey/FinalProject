@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController player { get; private set; }
@@ -10,6 +11,10 @@ public class PlayerController : MonoBehaviour
     public float movespeed;
     public float rotateSpeed;
     public float sprintspeed;
+    public Text hptext;
+    public Text staminatext;
+
+
     private bool IsSprinting;
     private Rigidbody rb;
     public float playerangle;
@@ -18,6 +23,8 @@ public class PlayerController : MonoBehaviour
     private GameObject[] enemyarray;
     public Collider coll;
     private EnemyController enemy;
+    private SpawnEnemy enemyspawn;
+
     private void Awake()
     {
         if (player != null && player != this)
@@ -54,8 +61,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        hptext.text = "Health: " +  hp.value;
+        staminatext.text = "Stamina: " + stamina.value;
         PlayerDamage();
         PlayerRotation();
+        
         if(Input.GetKeyDown(KeyCode.W))
         {
            rb.velocity = transform.forward * movespeed;
@@ -70,12 +80,14 @@ public class PlayerController : MonoBehaviour
             
             if(!IsSprinting)
             {
+                movespeed = 50f;
                 StartCoroutine(StaminaDeplete());
             }
+         
             //Debug.Log("Shift pressed");
-            IsSprinting = true;
+           
             //Debug.Log(IsSprinting);
-            movespeed = 50f;
+           
             //Debug.Log(movespeed);
             
             
@@ -84,13 +96,22 @@ public class PlayerController : MonoBehaviour
         
         else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            
-            if(IsSprinting)
-            {
-                StartCoroutine(StaminaReplenish());
-            }
+
+            //stamina.value++;
             movespeed = 35f;
-            stamina.value++;
+           
+        }
+        if (player.transform.position.y < 0)
+        {
+            SceneManager.LoadScene(2);
+        }
+        else if (hp.value <= 0)
+        {
+            SceneManager.LoadScene(2);
+        }
+        else if (enemyspawn.enemyspawned == 0)
+        {
+            SceneManager.LoadScene(3);
         }
         /*else if (!Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -124,21 +145,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    IEnumerator StaminaReplenish()
-    {
-        while (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            Debug.Log("in loop2");
-            if (stamina.value == 0)
-            {
-                stamina.value++;
-                yield return new WaitForSeconds(0.5f);
-            }
-
-
-        }
-       
-    }
+    
     void PlayerDamage()
     {
         if (Input.GetMouseButton(0))
@@ -156,5 +163,17 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-  
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("enemy"))
+        {
+            
+            hp.value -= 10;
+            Destroy(collision.gameObject);
+            enemyspawn.enemyspawned--;
+           
+        }
+    }
+    
+
 }

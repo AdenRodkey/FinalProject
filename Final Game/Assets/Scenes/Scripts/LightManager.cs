@@ -7,7 +7,7 @@ public class LightManager : MonoBehaviour
 {
     [SerializeField] private Light DirectionalLight;
     [SerializeField] private DaynNite Preset;
-
+    private int timeloop;
     //Variables
     [SerializeField, Range(0, 360)] public float TimeOfDay1;
     [SerializeField, Range(0, 360)] public int TimeOfDay;
@@ -16,6 +16,7 @@ public class LightManager : MonoBehaviour
 
     private void Start()
     {
+        timeloop = 0;
         TimeOfDay1 = 180f;
         TimeOfDay = Mathf.RoundToInt(TimeOfDay1);
     }
@@ -29,6 +30,12 @@ public class LightManager : MonoBehaviour
             TimeOfDay1 %= 360;
             TimeOfDay = Mathf.RoundToInt(TimeOfDay1);
             UpdateLighting(TimeOfDay1 / 360f);
+            if(TimeOfDay == 0)
+            {
+                
+                timeloop++;
+                Debug.Log(timeloop);
+            }
         }
         else
         {
