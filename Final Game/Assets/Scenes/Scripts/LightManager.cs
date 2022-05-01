@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [ExecuteAlways]
 public class LightManager : MonoBehaviour
 {
     [SerializeField] private Light DirectionalLight;
     [SerializeField] private DaynNite Preset;
-    private int timeloop;
+    public int timeloop;
     //Variables
     [SerializeField, Range(0, 360)] public float TimeOfDay1;
     [SerializeField, Range(0, 360)] public int TimeOfDay;
@@ -32,9 +33,10 @@ public class LightManager : MonoBehaviour
             UpdateLighting(TimeOfDay1 / 360f);
             if(TimeOfDay == 0)
             {
-                
-                timeloop++;
-                Debug.Log(timeloop);
+
+                SceneManager.LoadScene(3);
+                Destroy(PlayerController.player);
+                Cursor.lockState = CursorLockMode.Confined;
             }
         }
         else

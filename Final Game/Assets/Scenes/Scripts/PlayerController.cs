@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     public Collider coll;
     private EnemyController enemy;
     private SpawnEnemy enemyspawn;
+    private LightManager timeloopvalue;
+    private int enemyspawncounter;
 
     private void Awake()
     {
@@ -35,18 +37,20 @@ public class PlayerController : MonoBehaviour
             {
                 player = this;
             }
-        DontDestroyOnLoad(player);
+       
     }
     // Start is called before the first frame update
     void Start()
     {
-        enemyarray = GameObject.FindGameObjectsWithTag("enemy");
-        foreach(GameObject obj in enemyarray)
+        //enemyspawncounter  = enemyspawn.enemyspawned;
+        //Debug.Log(enemyspawncounter);
+        //enemyarray = GameObject.FindGameObjectsWithTag("enemy");
+        /*foreach(GameObject obj in enemyarray)
         {
             coll = GetComponent<CapsuleCollider>();
             
-        }
-        Cursor.lockState = CursorLockMode.Locked;
+        } */
+        Cursor.lockState = CursorLockMode.Confined;
         rotateSpeed = 500f;
         rb = GetComponent<Rigidbody>();
         movespeed = 35f;
@@ -63,21 +67,10 @@ public class PlayerController : MonoBehaviour
     {
         hptext.text = "Health: " +  hp.value;
         staminatext.text = "Stamina: " + stamina.value;
-        PlayerDamage();
+        //PlayerDamage();
         PlayerRotation();
-        if (player.transform.position.y < 0)
-        {
-            SceneManager.LoadScene(2);
-        }
-        else if (hp.value <= 0)
-        {
-            SceneManager.LoadScene(2);
-        }
-        else if (enemyspawn.enemyspawned == 0)
-        {
-            SceneManager.LoadScene(3);
-        }
-        if (Input.GetKeyDown(KeyCode.W))
+        
+        if(Input.GetKeyDown(KeyCode.W))
         {
            rb.velocity = transform.forward * movespeed;
         }
@@ -112,7 +105,15 @@ public class PlayerController : MonoBehaviour
             movespeed = 35f;
            
         }
-       
+        if (player.transform.position.y < 0)
+        {
+            SceneManager.LoadScene(2);
+        }
+        if (hp.value <= 0)
+        {
+            SceneManager.LoadScene(2);
+        }
+
         /*else if (!Input.GetKeyDown(KeyCode.LeftShift))
         {
             movespeed = 35f;
@@ -146,7 +147,7 @@ public class PlayerController : MonoBehaviour
     }
 
     
-    void PlayerDamage()
+    /*void PlayerDamage()
     {
         if (Input.GetMouseButton(0))
         {
@@ -162,7 +163,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log(enemy.enemyhealth);
             }
         }
-    }
+    } */
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("enemy"))
@@ -170,7 +171,8 @@ public class PlayerController : MonoBehaviour
             
             hp.value -= 10;
             Destroy(collision.gameObject);
-            enemyspawn.enemyspawned--;
+            enemyspawncounter--;
+            
            
         }
     }
