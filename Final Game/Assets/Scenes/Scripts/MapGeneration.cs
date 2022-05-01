@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿/*Aden Rodkey
+ * 4/30/22
+ * To generate a procedural map using vertices and triangles with vector3 and ints.
+ */
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

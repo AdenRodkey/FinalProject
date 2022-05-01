@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*Aden Rodkey
+ * 4/30/22
+ * Simple objective coroutine script.
+ */
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +14,8 @@ public class Objective : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        objectivetext.text = "Objective: Survive the day and night.";
+        //Sets text and starts coroutine.
+        objectivetext.text = "Objective: Survive the day and night. \n Kill the enemies by running into them if you want.";
         StartCoroutine(Objectivetimer());
     }
 
@@ -19,6 +24,7 @@ public class Objective : MonoBehaviour
     {
         
     }
+    //Coroutine for the objective text to fade and be set to alpha 1. (So you don't see it after reading it.)
     IEnumerator Objectivetimer()
     {
        
