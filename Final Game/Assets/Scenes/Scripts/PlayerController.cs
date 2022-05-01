@@ -65,8 +65,19 @@ public class PlayerController : MonoBehaviour
         staminatext.text = "Stamina: " + stamina.value;
         PlayerDamage();
         PlayerRotation();
-        
-        if(Input.GetKeyDown(KeyCode.W))
+        if (player.transform.position.y < 0)
+        {
+            SceneManager.LoadScene(2);
+        }
+        else if (hp.value <= 0)
+        {
+            SceneManager.LoadScene(2);
+        }
+        else if (enemyspawn.enemyspawned == 0)
+        {
+            SceneManager.LoadScene(3);
+        }
+        if (Input.GetKeyDown(KeyCode.W))
         {
            rb.velocity = transform.forward * movespeed;
         }
@@ -101,18 +112,7 @@ public class PlayerController : MonoBehaviour
             movespeed = 35f;
            
         }
-        if (player.transform.position.y < 0)
-        {
-            SceneManager.LoadScene(2);
-        }
-        else if (hp.value <= 0)
-        {
-            SceneManager.LoadScene(2);
-        }
-        else if (enemyspawn.enemyspawned == 0)
-        {
-            SceneManager.LoadScene(3);
-        }
+       
         /*else if (!Input.GetKeyDown(KeyCode.LeftShift))
         {
             movespeed = 35f;
