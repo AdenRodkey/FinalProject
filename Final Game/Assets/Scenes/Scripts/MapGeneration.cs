@@ -24,14 +24,15 @@ public class MapGeneration : MonoBehaviour
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
         GetComponent<MeshCollider>().sharedMesh = mesh;
-        GetComponent<MeshCollider>().convex = false;
+        //GetComponent<MeshCollider>().convex = false;
         CreateShape();
         MeshUpdater();
+        for(int i = 0; i < 1; i++)
+        {
+            GetComponent<MeshCollider>().convex = false;
+        }
     }
-    void FixedUpdate()
-    {
-        GetComponent<MeshCollider>().convex = true;
-    }
+   
 
  
 

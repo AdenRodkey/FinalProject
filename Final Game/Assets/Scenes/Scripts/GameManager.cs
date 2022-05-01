@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-[CreateAssetMenu(fileName = "Lighting Preset", menuName = "Scriptables/Lighting PReset", order =1)]
-public class DaynNite : ScriptableObject
+public class GameManager : MonoBehaviour
 {
-    public Gradient AmbientColor;
-    public Gradient DirectionalColor;
+    public GameObject EnemyPlane;
+    
     // Start is called before the first frame update
     void Start()
     {
-        
+        EnemyPlane.GetComponent<MeshRenderer>().enabled = false;
     }
 
     // Update is called once per frame
